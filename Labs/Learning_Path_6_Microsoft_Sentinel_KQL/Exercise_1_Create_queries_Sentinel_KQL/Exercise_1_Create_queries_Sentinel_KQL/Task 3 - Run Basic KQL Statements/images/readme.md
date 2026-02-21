@@ -1,105 +1,117 @@
-# TALLER 3  
-# Ejecución de Sentencias KQL Básicas en Microsoft Sentinel (Interfaz 2026)
+# Tarea 3 – Ejecución de Sentencias KQL Básicas  
+## Microsoft Sentinel – Workspace: law-sentinel-lab
 
 ---
 
-## 1. Objetivo
+## 📌 Descripción
 
-Ejecutar sentencias básicas del lenguaje Kusto Query Language (KQL) dentro del workspace **law-sentinel-lab**, aplicando operadores fundamentales como `search`, `where`, `in` y `let` para filtrar, analizar y estructurar datos almacenados en la tabla **SigninLogs**.
+En esta tarea se ejecutan sentencias básicas del lenguaje **Kusto Query Language (KQL)** dentro de Microsoft Sentinel, con el objetivo de comprender el uso de operadores fundamentales para la exploración y análisis de registros.
+
+Debido a que el entorno no contiene la tabla `SecurityEvent_CL` del laboratorio oficial, se utilizará la tabla **SigninLogs**, disponible en el workspace `law-sentinel-lab`.
 
 ---
 
-## 2. Entorno de Trabajo
+## 🎯 Objetivos
+
+- Ejecutar consultas básicas en KQL.
+- Utilizar el operador `search`.
+- Aplicar filtros con `where`.
+- Filtrar múltiples valores con `in`.
+- Declarar variables con `let`.
+- Crear listas dinámicas con `datatable`.
+- Generar tablas resumidas con `summarize`.
+
+---
+
+## ⚙️ Entorno
 
 - Plataforma: Microsoft Azure Portal  
 - Servicio: Microsoft Sentinel  
-- Workspace: law-sentinel-lab  
-- Área utilizada: Records (Log Analytics)  
-- Tabla principal utilizada: SigninLogs  
-- Intervalo de tiempo configurado: Últimas 24 horas  
+- Workspace: `law-sentinel-lab`  
+- Área: Logs / Records  
+- Tabla principal utilizada: `SigninLogs`  
+- Intervalo de tiempo: Últimas 24 horas (salvo que la consulta lo modifique)
 
 ---
 
-## 3. Consideraciones Previas
+## 📝 Consideraciones Importantes
 
-- Antes de ejecutar cada consulta, borrar la anterior o abrir una nueva pestaña de consulta seleccionando el botón **+** (máximo 25 pestañas).
-- Verificar que el editor esté configurado en **Modo KQL**.
-- Confirmar que el intervalo de tiempo esté establecido en **Últimas 24 horas**, salvo cuando la consulta filtre explícitamente por `TimeGenerated`.
-
----
-
-## 4. Desarrollo de Consultas
+- Antes de ejecutar cada consulta, borrar la anterior o abrir una nueva pestaña (+).
+- Ejecutar cada bloque de código de manera individual.
+- Verificar que el editor esté en **Modo KQL**.
+- Confirmar el intervalo de tiempo antes de ejecutar consultas.
 
 ---
 
-### 4.1 Uso del operador `search`
-
-El operador `search` permite buscar un término en todas las columnas disponibles.
+# 🔎 1. Uso del operador `search`
 
 ```kql
 search "Microsoft"
 ```
 
-**Descripción técnica:**
-Busca la palabra *Microsoft* en todas las tablas y columnas disponibles dentro del workspace.
-Este operador es menos eficiente que filtrar por tabla específica.
+**Descripción:**
+Busca la palabra "Microsoft" en todas las columnas de todas las tablas disponibles.
+
+**Nota:**
+El operador `search` sin especificar tabla es menos eficiente que el filtrado específico.
 
 ---
 
-### 4.2 Uso de `search` en tabla específica
+# 🔎 2. Búsqueda en tablas específicas
 
 ```kql
-search in (SigninLogs) "Microsoft"
+search in (SigninLogs, AuditLogs) "Microsoft"
 ```
 
-**Descripción técnica:**
-Limita la búsqueda únicamente a la tabla **SigninLogs**, optimizando el rendimiento.
+**Descripción:**
+Limita la búsqueda únicamente a las tablas `SigninLogs` y `AuditLogs`.
 
 ---
 
-### 4.3 Uso del operador `where` (filtro por tiempo)
+# ⏳ 3. Filtro por tiempo con `where`
 
 ```kql
 SigninLogs
 | where TimeGenerated > ago(7d)
 ```
 
-**Descripción técnica:**
-Filtra los registros generados en los últimos 7 días utilizando la columna `TimeGenerated`.
+**Descripción:**
+Filtra registros generados en los últimos 7 días.
 
 ---
 
-### 4.4 Uso de `where` con condición adicional
-
-```kql
-SigninLogs
-| where TimeGenerated > ago(7d) and ResultType == 0
-```
-
-**Descripción técnica:**
-Filtra los inicios de sesión exitosos (`ResultType == 0`) ocurridos en los últimos 7 días.
-
----
-
-### 4.5 Uso de múltiples cláusulas `where`
+# 🔐 4. Filtro con condición adicional
 
 ```kql
 SigninLogs
 | where TimeGenerated > ago(7d)
 | where ResultType == 0
-| where AppDisplayName =~ "Microsoft"
 ```
 
-**Descripción técnica:**
-Aplica filtros progresivos:
-
-* Últimos 7 días
-* Inicios de sesión exitosos
-* Aplicaciones cuyo nombre contenga "Microsoft"
+**Descripción:**
+Filtra inicios de sesión exitosos (`ResultType == 0`) en los últimos 7 días.
 
 ---
 
-### 4.6 Uso del operador `in`
+# 👤 5. Uso de múltiples condiciones `where`
+
+```kql
+SigninLogs
+| where TimeGenerated > ago(7d)
+| where ResultType == 0
+| where UserPrincipalName contains "@"
+```
+
+**Descripción:**
+Aplica múltiples filtros:
+
+* Últimos 7 días
+* Inicios exitosos
+* Usuarios que contengan dominio
+
+---
+
+# 🔢 6. Uso del operador `in`
 
 ```kql
 SigninLogs
@@ -107,26 +119,27 @@ SigninLogs
 | where ResultType in (0, 50053)
 ```
 
-**Descripción técnica:**
-Filtra múltiples valores en una sola condición.
-Permite evaluar más de un código de resultado simultáneamente.
+**Descripción:**
+Filtra múltiples códigos de resultado en una sola condición.
 
 ---
 
-### 4.7 Uso de `let` para declarar variables
+# 🧮 7. Uso de `let` para declarar variables
 
 ```kql
 let timeOffset = 10m;
+let discardResult = 50053;
 SigninLogs
 | where TimeGenerated > ago(timeOffset * 6)
+| where ResultType != discardResult
 ```
 
-**Descripción técnica:**
-Declara una variable (`timeOffset`) para reutilizarla dentro de la consulta, facilitando la modificación de parámetros.
+**Descripción:**
+Declara variables reutilizables dentro de la consulta.
 
 ---
 
-### 4.8 Uso de `let` con lista dinámica
+# 📋 8. Lista dinámica con `datatable`
 
 ```kql
 let suspiciousApps = datatable(app:string)
@@ -135,45 +148,44 @@ let suspiciousApps = datatable(app:string)
   "Azure Portal"
 ];
 SigninLogs
+| where TimeGenerated > ago(7d)
 | where AppDisplayName in (suspiciousApps)
 ```
 
-**Descripción técnica:**
-Define una lista dinámica de aplicaciones y filtra registros que coincidan con dichos valores.
+**Descripción:**
+Crea una lista dinámica y filtra registros que coincidan con los valores definidos.
 
 ---
 
-### 4.9 Uso de `let` con tabla dinámica
+# 📊 9. Tabla dinámica con `summarize`
 
 ```kql
 let LowActivityUsers =
     SigninLogs
-    | summarize cnt = count() by UserPrincipalName
-    | where cnt < 5;
+    | summarize total = count() by UserPrincipalName
+    | where total < 5;
 LowActivityUsers
 ```
 
-**Descripción técnica:**
+**Descripción:**
 
-1. Resume la cantidad de eventos por usuario.
-2. Filtra usuarios con menos de 5 eventos.
+1. Resume el número de eventos por usuario.
+2. Filtra usuarios con baja actividad.
 3. Devuelve una tabla dinámica con los resultados.
 
 ---
 
-## 5. Resultados Esperados
+## ✅ Resultados Esperados
 
-* Visualización de datos filtrados correctamente.
-* Aplicación adecuada de operadores básicos de KQL.
-* Comprensión del filtrado por tiempo, condiciones y listas.
-* Uso correcto de variables y estructuras dinámicas.
+* Ejecución correcta de consultas KQL.
+* Visualización de datos filtrados.
+* Comprensión del uso de operadores básicos.
+* Manipulación de datos mediante variables y tablas dinámicas.
 
 ---
 
-## 6. Conclusión
+## 🏁 Conclusión
 
-Durante el desarrollo del Taller 3 se ejecutaron sentencias básicas en lenguaje KQL dentro del workspace **law-sentinel-lab** en Microsoft Sentinel.
+Durante esta tarea se aplicaron sentencias básicas en KQL dentro del workspace `law-sentinel-lab` en Microsoft Sentinel.
 
-Se aplicaron operadores fundamentales como `search`, `where`, `in` y `let`, permitiendo filtrar, organizar y analizar registros de inicio de sesión almacenados en la tabla **SigninLogs**.
-
-La práctica fortaleció la comprensión del funcionamiento del motor de consultas KQL y su aplicación en escenarios reales de análisis de registros de seguridad.
+Se utilizaron operadores fundamentales como `search`, `where`, `in` y `let`, así como estructuras dinámicas con `datatable` y `summarize`, demostrando comprensión práctica del lenguaje KQL para análisis de registros en entornos de seguridad.
