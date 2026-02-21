@@ -1,4 +1,4 @@
-# 🧪 TALLER 2  
+# TALLER 2  
 # Exploración del Log Analytics Workspace en Microsoft Sentinel 
 
 ---
