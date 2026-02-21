@@ -1,24 +1,19 @@
 # TALLER 1  
-# Preparación y Validación del Entorno en Microsoft Sentinel (Interfaz 2026)
+# Preparación del Entorno en Microsoft Sentinel (Interfaz 2026)
 
 ---
 
 ## 1. Objetivo
 
-Validar la correcta configuración del entorno de trabajo en Microsoft Sentinel, confirmando:
-
-- Acceso al portal Azure.
-- Selección del workspace correcto.
-- Disponibilidad de tablas con datos.
-- Funcionamiento del editor en modo KQL.
-- Ejecución exitosa de consultas.
+Preparar y verificar el entorno de trabajo en Microsoft Sentinel dentro del portal de Microsoft Azure, asegurando que el workspace esté correctamente habilitado y accesible para actividades posteriores.
 
 ---
 
 ## 2. Entorno de Trabajo
 
+- Plataforma: Microsoft Azure Portal  
+- Servicio: Microsoft Sentinel  
 - Workspace: law-sentinel-lab  
-- Interfaz: Microsoft Sentinel | Records  
 - Portal: https://portal.azure.com  
 
 ---
@@ -27,22 +22,21 @@ Validar la correcta configuración del entorno de trabajo en Microsoft Sentinel,
 
 ---
 
+### 3.1 Acceso al Portal Azure
 
-### 3.2 Acceso al Portal Azure
-
-1. Abrir Microsoft Edge.
+1. Abrir el navegador Microsoft Edge.
 2. Ingresar a:
 
    https://portal.azure.com
 
 3. Autenticarse con las credenciales asignadas.
-4. Verificar carga exitosa del portal.
+4. Confirmar que el portal cargue correctamente.
 
 ---
 
-### 3.3 Acceso a Microsoft Sentinel
+### 3.2 Acceso a Microsoft Sentinel
 
-1. En la barra de búsqueda superior escribir:
+1. En la barra de búsqueda superior del portal Azure escribir:
 
    Microsoft Sentinel
 
@@ -51,55 +45,54 @@ Validar la correcta configuración del entorno de trabajo en Microsoft Sentinel,
 
    law-sentinel-lab
 
-4. Confirmar que la interfaz muestre en la parte superior:
+4. Verificar que la interfaz muestre en la parte superior:
 
    Microsoft Sentinel | Records  
    Selected workspace: "law-sentinel-lab"
-   
-![Descripción de la imagen](images/img1.jpg)
+
+![Acceso a Microsoft Sentinel](images/img1.jpg)
 
 ---
 
+### 3.3 Verificación del Workspace
 
-### 3.5 Acceso al Editor de Consultas
+1. Confirmar que el panel lateral muestre las secciones principales del servicio.
+2. Validar que el workspace esté activo y sin errores de configuración.
 
-1. En el menú izquierdo seleccionar:
+Esta verificación confirma que el servicio se encuentra habilitado correctamente sobre el workspace seleccionado.
+
+---
+
+### 3.4 Acceso al Área de Registros
+
+1. En el menú lateral seleccionar:
 
    Records
 
-2. Confirmar que el editor esté configurado en:
+2. Confirmar que se abra el editor de registros (Log Analytics).
+3. Verificar que el entorno esté listo para futuras consultas.
 
-   Modo KQL
-
-3. Si aparece "Modo simple", cambiar manualmente a Modo KQL.
-
-![Descripción de la imagen](images/img2.jpg)
+![Acceso al área de registros](images/img2.jpg)
 
 ---
 
-### 3.6 Verificación de Tablas
+### 3.5 Verificación de Tablas Disponibles
 
-En el panel izquierdo del editor revisar la sección Tablas y confirmar la existencia de:
+En el panel izquierdo (Tablas / Schema), confirmar la existencia de tablas activas tales como:
 
 - SigninLogs  
 - AuditLogs  
 - SecurityAlert  
 - SecurityIncident  
 
-![Descripción de la imagen](images/img4.jpg)
+La presencia de estas tablas indica que el entorno está correctamente configurado y listo para su utilización en el siguiente taller.
+
+![Verificación de tablas](images/img4.jpg)
 
 ---
 
-### 3.7 Validación de Datos
+## 4. Conclusión
 
-En el editor KQL ejecutar la siguiente consulta:
+Se verificó el acceso al portal Microsoft Azure, la disponibilidad del servicio Microsoft Sentinel y la correcta selección del workspace law-sentinel-lab.  
 
-```kql
-SigninLogs
-| take 10
-```
-
-![Descripción de la imagen](images/img3.jpg)
-
-
-
+El entorno quedó preparado y validado para la ejecución de consultas KQL en el Taller 2.
