@@ -1,4 +1,4 @@
-# 🧪 TALLER 1  
+# TALLER 1  
 # Preparación y Validación del Entorno en Microsoft Sentinel (Interfaz 2026)
 
 ---
@@ -100,5 +100,6 @@ SigninLogs
 ```
 
 ![Descripción de la imagen](images/img3.jpg)
+
 
 
