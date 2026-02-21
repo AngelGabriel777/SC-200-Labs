@@ -5,7 +5,7 @@
 
 ## 1. Objetivo
 
-Explorar el espacio de trabajo de análisis de registros en Microsoft Sentinel, familiarizándose con la interfaz del editor KQL, el esquema de tablas disponibles y la ejecución de consultas básicas sobre datos de ejemplo.
+Explorar el espacio de trabajo de análisis de registros en Microsoft Sentinel, utilizando el editor en modo KQL para ejecutar consultas sobre datos reales del workspace y analizar los resultados obtenidos.
 
 ---
 
@@ -14,7 +14,8 @@ Explorar el espacio de trabajo de análisis de registros en Microsoft Sentinel, 
 - Plataforma: Microsoft Azure Portal  
 - Servicio: Microsoft Sentinel  
 - Workspace: defenderWorkspace  
-- Área utilizada: Registros (Log Analytics)
+- Área utilizada: Registros (Log Analytics)  
+- Tabla utilizada: SigninLogs  
 
 ---
 
@@ -29,7 +30,7 @@ Explorar el espacio de trabajo de análisis de registros en Microsoft Sentinel, 
    Microsoft Sentinel
 
 2. Seleccionar el servicio desde los resultados.
-3. En la página principal, elegir el espacio de trabajo:
+3. Elegir el espacio de trabajo:
 
    defenderWorkspace
 
@@ -37,51 +38,48 @@ Explorar el espacio de trabajo de análisis de registros en Microsoft Sentinel, 
 
 ### 3.2 Acceso al Área de Registros
 
-1. En el menú de navegación izquierdo expandir la sección:
-
-   General
-
-2. Seleccionar:
+1. En el menú de navegación izquierdo seleccionar:
 
    Registros
 
-3. Cerrar la ventana emergente de video de Log Analytics si aparece.
-4. Cerrar el Centro de consultas para trabajar directamente en el editor.
+2. Cerrar la ventana emergente de Log Analytics si aparece.
+3. Cerrar el Centro de consultas para trabajar directamente en el editor.
 
 ---
 
 ### 3.3 Configuración del Editor en Modo KQL
 
-1. Ubicar el selector de modo en la parte superior del editor.
-2. Cambiar de:
+1. Verificar que el editor esté configurado en:
 
-   Modo simple → Modo KQL
+   Modo KQL
 
-Esto permite escribir consultas manualmente utilizando el lenguaje Kusto Query Language.
+2. Confirmar que el intervalo de tiempo esté establecido en:
 
----
+   Últimas 24 horas
 
-### 3.4 Exploración del Esquema y Panel de Filtros
+3. Confirmar que el filtro de resultados esté configurado en:
 
-1. En el panel izquierdo observar:
-
-   - Esquema (Schema)
-   - Tablas disponibles
-   - Panel de filtros
-
-2. Expandir diferentes tablas para visualizar:
-
-   - Columnas
-   - Tipos de datos
-   - Herramientas adicionales disponibles
-
-Esta exploración permite comprender la estructura de los datos almacenados en el workspace.
+   Mostrar: 1000 resultados
 
 ---
 
-### 3.5 Ejecución de Consulta en Tabla Personalizada
+### 3.4 Exploración del Esquema
 
-En el editor de consultas, introducir la siguiente consulta:
+1. En el panel izquierdo revisar la sección de tablas.
+2. Identificar la tabla:
+
+   SigninLogs
+
+3. Expandir la tabla para observar las columnas disponibles.
+
+Esta tabla contiene registros de intentos de inicio de sesión dentro del entorno.
+
+---
+
+### 3.5 Ejecución de Consulta
+
+En el editor de consultas ingresar la siguiente instrucción:
 
 ```kql
-SecurityEvent_CL
+SigninLogs
+| take 10
