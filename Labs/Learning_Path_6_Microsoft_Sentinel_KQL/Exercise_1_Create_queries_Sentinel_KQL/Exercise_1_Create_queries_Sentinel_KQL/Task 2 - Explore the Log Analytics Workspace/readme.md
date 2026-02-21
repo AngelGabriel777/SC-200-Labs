@@ -32,7 +32,7 @@ Explorar el espacio de trabajo de análisis de registros en Microsoft Sentinel, 
 2. Seleccionar el servicio desde los resultados.
 3. Elegir el espacio de trabajo:
 
-   defenderWorkspace
+   law-sentinel-lab
 ![Acceso al área de registros](images/img1.jpg)
 
 ---
