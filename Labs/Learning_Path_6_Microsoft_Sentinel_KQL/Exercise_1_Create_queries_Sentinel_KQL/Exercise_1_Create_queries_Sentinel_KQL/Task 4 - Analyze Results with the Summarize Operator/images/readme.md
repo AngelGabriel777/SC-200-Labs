@@ -1,9 +1,9 @@
-# 📊 Task 4 – Análisis de Resultados en KQL con el Operador `summarize`
-### Microsoft Sentinel / Log Analytics – Laboratorio Práctico
+# Task 4: Análisis de Resultados en KQL con el Operador `summarize`
+## Microsoft Sentinel / Log Analytics – Laboratorio Práctico
 
 ---
 
-## 🎯 Objetivo
+## Objetivo
 
 En este laboratorio se analiza información de autenticación y seguridad utilizando el operador **`summarize` en KQL (Kusto Query Language)**.
 
@@ -19,16 +19,16 @@ Se aprenderá a:
 
 ---
 
-# 🏗️ Entorno de Trabajo
+## Entorno de Trabajo
 
-## Plataforma
+### Plataforma
 - Microsoft Azure
 - Log Analytics Workspace
 - Microsoft Sentinel
 
-## Tablas Disponibles
+### Tablas Disponibles
 
-### LogManagement
+#### LogManagement
 - `SigninLogs`
 - `AADManagedIdentitySignInLogs`
 - `AADNonInteractiveUserSignInLogs`
@@ -36,20 +36,20 @@ Se aprenderá a:
 - `MicrosoftGraphActivityLogs`
 - `Usage`
 
-### Microsoft Sentinel
+#### Microsoft Sentinel
 - `SecurityAlert`
 - `SecurityIncident`
 
-> ⚠ Nota: En este entorno se utilizan tablas nativas de Azure. La tabla principal utilizada será `SigninLogs`.
+> **Nota:** En este entorno se utilizan tablas nativas de Azure. La tabla principal utilizada será `SigninLogs`.
 
 ---
 
-# 🔎 Paso 1 – Contar Inicios de Sesión por Aplicación
+## Paso 1 – Contar Inicios de Sesión por Aplicación
 
-## 🎯 Objetivo
+### Objetivo
 Determinar cuántos eventos de autenticación ocurrieron por aplicación en los últimos 7 días.
 
-## 🧪 Consulta
+### Consulta
 
 ```kql
 SigninLogs
@@ -57,13 +57,13 @@ SigninLogs
 | summarize count() by AppDisplayName
 ```
 
-## 📝 Explicación
+### Explicación
 
 - `where TimeGenerated > ago(7d)` → Filtra los últimos 7 días.
 - `summarize count()` → Cuenta los eventos.
 - `by AppDisplayName` → Agrupa por aplicación.
 
-## 🔐 Análisis de Seguridad
+### Análisis de Seguridad
 
 Permite identificar:
 
@@ -73,25 +73,25 @@ Permite identificar:
 
 ---
 
-# 🔎 Paso 2 – Conteo por Tipo de Cliente y Aplicación
+## Paso 2 – Conteo por Tipo de Cliente y Aplicación
 
-## 🎯 Objetivo
+### Objetivo
 Analizar desde qué tipo de cliente se realizan las autenticaciones.
 
-## 🧪 Consulta
+### Consulta
 
 ```kql
 SigninLogs
 | where TimeGenerated > ago(7d)
-| summarize cnt=count() by ClientAppUsed, AppDisplayName
+| summarize cnt = count() by ClientAppUsed, AppDisplayName
 ```
 
-## 📝 Explicación
+### Explicación
 
 - `ClientAppUsed` → Indica el tipo de cliente (Browser, Mobile, etc.).
-- `cnt=count()` → Renombra la columna del conteo.
+- `cnt = count()` → Renombra la columna del conteo.
 
-## 🔐 Análisis de Seguridad
+### Análisis de Seguridad
 
 Permite detectar:
 
@@ -101,12 +101,12 @@ Permite detectar:
 
 ---
 
-# 🔎 Paso 3 – Conteo de Direcciones IP Distintas
+## Paso 3 – Conteo de Direcciones IP Distintas
 
-## 🎯 Objetivo
+### Objetivo
 Identificar cuántas direcciones IP diferentes realizaron autenticaciones.
 
-## 🧪 Consulta
+### Consulta
 
 ```kql
 SigninLogs
@@ -114,12 +114,12 @@ SigninLogs
 | summarize dcount(IPAddress)
 ```
 
-## 📝 Explicación
+### Explicación
 
 - `dcount()` → Cuenta valores distintos (aproximado).
 - `IPAddress` → Dirección IP del inicio de sesión.
 
-## 🔐 Análisis de Seguridad
+### Análisis de Seguridad
 
 Un número elevado puede indicar:
 
@@ -129,12 +129,12 @@ Un número elevado puede indicar:
 
 ---
 
-# 🔎 Paso 4 – Detección de Intentos con Cuenta Deshabilitada
+## Paso 4 – Detección de Intentos con Cuenta Deshabilitada
 
-## 🎯 Objetivo
+### Objetivo
 Detectar intentos de autenticación con cuentas deshabilitadas.
 
-## 🧪 Consulta
+### Consulta
 
 ```kql
 let timeframe = 30d;
@@ -146,14 +146,14 @@ SigninLogs
 | where applicationCount >= threshold
 ```
 
-## 📝 Explicación
+### Explicación
 
 - `let` → Define variables reutilizables.
 - Filtra eventos donde la cuenta está deshabilitada.
 - Cuenta aplicaciones distintas involucradas.
 - Aplica un umbral mínimo.
 
-## 🔐 Análisis de Seguridad
+### Análisis de Seguridad
 
 Puede indicar:
 
@@ -163,24 +163,23 @@ Puede indicar:
 
 ---
 
-# 🔎 Paso 5 – Obtener el Evento Más Reciente (arg_max)
+## Paso 5 – Obtener el Evento Más Reciente (`arg_max`)
 
-## 🎯 Objetivo
+### Objetivo
 Obtener el inicio de sesión más reciente por usuario.
 
-## 🧪 Consulta
+### Consulta
 
 ```kql
 SigninLogs
 | summarize arg_max(TimeGenerated, *) by UserPrincipalName
 ```
 
-## 📝 Explicación
+### Explicación
 
-- `arg_max(TimeGenerated, *)`
-- Devuelve la fila completa con el tiempo más reciente.
+- `arg_max(TimeGenerated, *)` devuelve la fila completa con el tiempo más reciente para cada usuario.
 
-## 🔐 Análisis de Seguridad
+### Análisis de Seguridad
 
 Útil para:
 
@@ -190,23 +189,23 @@ SigninLogs
 
 ---
 
-# 🔎 Paso 6 – Obtener el Evento Más Antiguo (arg_min)
+## Paso 6 – Obtener el Evento Más Antiguo (`arg_min`)
 
-## 🎯 Objetivo
+### Objetivo
 Identificar el primer evento registrado por usuario.
 
-## 🧪 Consulta
+### Consulta
 
 ```kql
 SigninLogs
 | summarize arg_min(TimeGenerated, *) by UserPrincipalName
 ```
 
-## 📝 Explicación
+### Explicación
 
-- Devuelve el evento más antiguo registrado.
+- Devuelve el evento más antiguo registrado para cada usuario.
 
-## 🔐 Análisis de Seguridad
+### Análisis de Seguridad
 
 Permite:
 
@@ -215,9 +214,9 @@ Permite:
 
 ---
 
-# 🔎 Paso 7 – Importancia del Orden del Pipe (`|`)
+## Paso 7 – Importancia del Orden del Pipe (`|`)
 
-## 🧪 Consulta 1
+### Consulta 1
 
 ```kql
 SigninLogs
@@ -225,16 +224,16 @@ SigninLogs
 | where ResultType == 0
 ```
 
-### Significado
+**Significado**:
 
 1. Obtiene el último evento por usuario.
 2. Luego filtra si fue exitoso.
 
-👉 Muestra usuarios cuya última actividad fue un inicio de sesión exitoso.
+👉 Muestra usuarios cuya **última actividad fue un inicio de sesión exitoso**.
 
 ---
 
-## 🧪 Consulta 2
+### Consulta 2
 
 ```kql
 SigninLogs
@@ -242,30 +241,28 @@ SigninLogs
 | summarize arg_max(TimeGenerated, *) by UserPrincipalName
 ```
 
-### Significado
+**Significado**:
 
 1. Primero filtra inicios exitosos.
 2. Luego obtiene el más reciente.
 
-👉 Muestra el último inicio de sesión exitoso por usuario.
+👉 Muestra el **último inicio de sesión exitoso** por usuario.
 
----
-
-## ⚠ Diferencia Clave
+### Diferencia Clave
 
 | Consulta 1 | Consulta 2 |
-|-------------|------------|
+|------------|------------|
 | Último evento fue exitoso | Último inicio exitoso |
 | Más restrictiva | Más amplia |
 
 ---
 
-# 🔎 Paso 8 – Uso de `make_list()`
+## Paso 8 – Uso de `make_list()`
 
-## 🎯 Objetivo
+### Objetivo
 Generar una lista completa de aplicaciones utilizadas por usuario.
 
-## 🧪 Consulta
+### Consulta
 
 ```kql
 SigninLogs
@@ -273,25 +270,23 @@ SigninLogs
 | summarize make_list(AppDisplayName) by UserPrincipalName
 ```
 
-## 📝 Explicación
+### Explicación
 
-- Devuelve un arreglo JSON.
-- Incluye valores duplicados.
+- Devuelve un arreglo JSON con todos los valores (incluyendo duplicados).
 
-## Ejemplo de Resultado
-
+**Ejemplo de Resultado**:
 ```json
 ["Azure Portal","Azure Portal","Teams","Outlook"]
 ```
 
 ---
 
-# 🔎 Paso 9 – Uso de `make_set()`
+## Paso 9 – Uso de `make_set()`
 
-## 🎯 Objetivo
+### Objetivo
 Generar lista única de aplicaciones por usuario.
 
-## 🧪 Consulta
+### Consulta
 
 ```kql
 SigninLogs
@@ -299,35 +294,32 @@ SigninLogs
 | summarize make_set(AppDisplayName) by UserPrincipalName
 ```
 
-## 📝 Explicación
+### Explicación
 
-- Elimina duplicados.
-- Devuelve solo valores distintos.
+- Elimina duplicados; devuelve solo valores distintos.
 
-## Ejemplo de Resultado
-
+**Ejemplo de Resultado**:
 ```json
 ["Azure Portal","Teams","Outlook"]
 ```
 
 ---
 
-# 🔎 Paso 10 – Análisis de Alertas de Seguridad
+## Paso 10 – Análisis de Alertas de Seguridad
 
-## 🧪 Consulta
+### Consulta
 
 ```kql
 SecurityAlert
 | summarize count() by Severity
 ```
 
-## 🎯 Objetivo
-
+### Objetivo
 Analizar la distribución de alertas según su nivel de severidad.
 
 ---
 
-# 🧠 Conceptos Aprendidos
+## Conceptos Aprendidos
 
 - `summarize`
 - `count()`
@@ -336,11 +328,11 @@ Analizar la distribución de alertas según su nivel de severidad.
 - `arg_min()`
 - `make_list()`
 - `make_set()`
-- Importancia del orden del pipe
+- Importancia del orden del pipe (`|`)
 
 ---
 
-# 🏁 Conclusión
+## Conclusión
 
 El operador `summarize` permite:
 
@@ -355,5 +347,3 @@ Dominar estas funciones es fundamental para:
 - Analistas de Microsoft Sentinel.
 - Preparación para la certificación SC-200.
 - Actividades de Threat Hunting.
-
----
