@@ -144,7 +144,7 @@ SigninLogs
 **Descripción:**
 Declara variables reutilizables dentro de la consulta.
 
-![Acceso al área de registros](images/img4.jpg)
+![Acceso al área de registros](images/img6.jpg)
 
 ---
 
@@ -200,6 +200,7 @@ LowActivityUsers
 Durante esta tarea se aplicaron sentencias básicas en KQL dentro del workspace `law-sentinel-lab` en Microsoft Sentinel.
 
 Se utilizaron operadores fundamentales como `search`, `where`, `in` y `let`, así como estructuras dinámicas con `datatable` y `summarize`, demostrando comprensión práctica del lenguaje KQL para análisis de registros en entornos de seguridad.
+
 
 
 
