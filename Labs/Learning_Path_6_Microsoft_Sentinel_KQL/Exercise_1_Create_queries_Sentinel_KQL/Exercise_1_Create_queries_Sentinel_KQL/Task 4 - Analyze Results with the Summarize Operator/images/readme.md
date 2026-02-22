@@ -101,7 +101,7 @@ Permite detectar:
 - Métodos de acceso sospechosos.
 - Comportamientos fuera de la línea base.
 
-![Acceso al área de registros](images/img2.jpg)
+![Acceso al área de registros](images/img4.jpg)
 
 ---
 
@@ -356,6 +356,7 @@ Dominar estas funciones es fundamental para:
 - Analistas de Microsoft Sentinel.
 - Preparación para la certificación SC-200.
 - Actividades de Threat Hunting.
+
 
 
 
