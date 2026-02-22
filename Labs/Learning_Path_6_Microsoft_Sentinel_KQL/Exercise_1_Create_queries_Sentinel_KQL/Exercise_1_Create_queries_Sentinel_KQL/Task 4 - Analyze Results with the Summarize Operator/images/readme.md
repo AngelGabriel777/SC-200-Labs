@@ -71,6 +71,8 @@ Permite identificar:
 - Picos inusuales de autenticación.
 - Posible actividad anómala.
 
+![Acceso al área de registros](images/img1.jpg)
+
 ---
 
 ## Paso 2 – Conteo por Tipo de Cliente y Aplicación
@@ -98,6 +100,8 @@ Permite detectar:
 - Uso inesperado de autenticación heredada.
 - Métodos de acceso sospechosos.
 - Comportamientos fuera de la línea base.
+
+![Acceso al área de registros](images/img2.jpg)
 
 ---
 
@@ -186,6 +190,8 @@ SigninLogs
 - Respuesta ante incidentes.
 - Reconstrucción de línea de tiempo.
 - Verificación de última actividad.
+
+![Acceso al área de registros](images/img3.jpg)
 
 ---
 
@@ -331,6 +337,8 @@ Analizar la distribución de alertas según su nivel de severidad.
 - `make_set()`
 - Importancia del orden del pipe (`|`)
 
+![Acceso al área de registros](images/img2.jpg)
+
 ---
 
 ## Conclusión
@@ -348,5 +356,6 @@ Dominar estas funciones es fundamental para:
 - Analistas de Microsoft Sentinel.
 - Preparación para la certificación SC-200.
 - Actividades de Threat Hunting.
+
 
 
