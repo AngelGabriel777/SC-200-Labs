@@ -1,32 +1,32 @@
-# 📊 Task 4 – Analyze Results in KQL with the `summarize` Operator  
-### Microsoft Sentinel / Log Analytics – Hands-On Lab
+# 📊 Task 4 – Análisis de Resultados en KQL con el Operador `summarize`
+### Microsoft Sentinel / Log Analytics – Laboratorio Práctico
 
 ---
 
-## 🎯 Objective
+## 🎯 Objetivo
 
-In this lab, we analyze authentication and security data using the **`summarize` operator in KQL (Kusto Query Language)**.
+En este laboratorio se analiza información de autenticación y seguridad utilizando el operador **`summarize` en KQL (Kusto Query Language)**.
 
-You will learn how to:
+Se aprenderá a:
 
-- Aggregate data
-- Count events
-- Calculate distinct values
-- Detect suspicious patterns
-- Extract latest and oldest records
-- Generate lists and sets
-- Understand pipeline execution order
+- Agrupar datos
+- Contar eventos
+- Calcular valores distintos
+- Detectar comportamientos sospechosos
+- Obtener registros más recientes y más antiguos
+- Generar listas y conjuntos
+- Comprender la importancia del orden del pipe (`|`)
 
 ---
 
-# 🏗️ Environment
+# 🏗️ Entorno de Trabajo
 
-## Platform
+## Plataforma
 - Microsoft Azure
 - Log Analytics Workspace
 - Microsoft Sentinel
 
-## Available Tables
+## Tablas Disponibles
 
 ### LogManagement
 - `SigninLogs`
@@ -40,16 +40,16 @@ You will learn how to:
 - `SecurityAlert`
 - `SecurityIncident`
 
-> ⚠ Note: This environment uses native Azure tables. We will primarily use `SigninLogs`.
+> ⚠ Nota: En este entorno se utilizan tablas nativas de Azure. La tabla principal utilizada será `SigninLogs`.
 
 ---
 
-# 🔎 Step 1 – Count Sign-ins per Application
+# 🔎 Paso 1 – Contar Inicios de Sesión por Aplicación
 
-## 🎯 Goal
-Determine how many authentication events occurred per application in the last 7 days.
+## 🎯 Objetivo
+Determinar cuántos eventos de autenticación ocurrieron por aplicación en los últimos 7 días.
 
-## 🧪 Query
+## 🧪 Consulta
 
 ```kql
 SigninLogs
@@ -57,26 +57,28 @@ SigninLogs
 | summarize count() by AppDisplayName
 ```
 
-## 📝 Explanation
+## 📝 Explicación
 
-- `where TimeGenerated > ago(7d)` → Filters last 7 days.
-- `summarize count()` → Counts total events.
-- `by AppDisplayName` → Groups results by application.
+- `where TimeGenerated > ago(7d)` → Filtra los últimos 7 días.
+- `summarize count()` → Cuenta los eventos.
+- `by AppDisplayName` → Agrupa por aplicación.
 
-## 🔐 Security Insight
+## 🔐 Análisis de Seguridad
 
-Helps identify:
-- Most used applications
-- Abnormal spikes in authentication activity
+Permite identificar:
+
+- Aplicaciones más utilizadas.
+- Picos inusuales de autenticación.
+- Posible actividad anómala.
 
 ---
 
-# 🔎 Step 2 – Count Sign-ins by Client Type and Application
+# 🔎 Paso 2 – Conteo por Tipo de Cliente y Aplicación
 
-## 🎯 Goal
-Analyze how users are authenticating (Browser, Mobile, etc.).
+## 🎯 Objetivo
+Analizar desde qué tipo de cliente se realizan las autenticaciones.
 
-## 🧪 Query
+## 🧪 Consulta
 
 ```kql
 SigninLogs
@@ -84,25 +86,27 @@ SigninLogs
 | summarize cnt=count() by ClientAppUsed, AppDisplayName
 ```
 
-## 📝 Explanation
+## 📝 Explicación
 
-- `ClientAppUsed` → Indicates authentication method.
-- `cnt=count()` → Renames the count column.
+- `ClientAppUsed` → Indica el tipo de cliente (Browser, Mobile, etc.).
+- `cnt=count()` → Renombra la columna del conteo.
 
-## 🔐 Security Insight
+## 🔐 Análisis de Seguridad
 
-Detect:
-- Suspicious authentication methods
-- Unexpected legacy authentication usage
+Permite detectar:
+
+- Uso inesperado de autenticación heredada.
+- Métodos de acceso sospechosos.
+- Comportamientos fuera de la línea base.
 
 ---
 
-# 🔎 Step 3 – Count Distinct IP Addresses
+# 🔎 Paso 3 – Conteo de Direcciones IP Distintas
 
-## 🎯 Goal
-Identify how many different IP addresses were used for sign-ins.
+## 🎯 Objetivo
+Identificar cuántas direcciones IP diferentes realizaron autenticaciones.
 
-## 🧪 Query
+## 🧪 Consulta
 
 ```kql
 SigninLogs
@@ -110,26 +114,27 @@ SigninLogs
 | summarize dcount(IPAddress)
 ```
 
-## 📝 Explanation
+## 📝 Explicación
 
-- `dcount()` → Approximate distinct count.
-- Measures number of unique IP addresses.
+- `dcount()` → Cuenta valores distintos (aproximado).
+- `IPAddress` → Dirección IP del inicio de sesión.
 
-## 🔐 Security Insight
+## 🔐 Análisis de Seguridad
 
-A high number of IP addresses may indicate:
-- Account compromise
-- Credential sharing
-- Distributed attack attempts
+Un número elevado puede indicar:
+
+- Cuenta comprometida.
+- Uso compartido de credenciales.
+- Intentos distribuidos de acceso.
 
 ---
 
-# 🔎 Step 4 – Detect Disabled Account Login Attempts
+# 🔎 Paso 4 – Detección de Intentos con Cuenta Deshabilitada
 
-## 🎯 Goal
-Identify login attempts from disabled accounts across multiple applications.
+## 🎯 Objetivo
+Detectar intentos de autenticación con cuentas deshabilitadas.
 
-## 🧪 Query
+## 🧪 Consulta
 
 ```kql
 let timeframe = 30d;
@@ -141,75 +146,78 @@ SigninLogs
 | where applicationCount >= threshold
 ```
 
-## 📝 Explanation
+## 📝 Explicación
 
-- `let` → Defines reusable variables.
-- Filters disabled account errors.
-- Counts distinct applications involved.
-- Applies threshold logic.
+- `let` → Define variables reutilizables.
+- Filtra eventos donde la cuenta está deshabilitada.
+- Cuenta aplicaciones distintas involucradas.
+- Aplica un umbral mínimo.
 
-## 🔐 Security Insight
+## 🔐 Análisis de Seguridad
 
-Possible indicators:
-- Automated attack
-- Misconfigured account
-- Account abuse attempt
+Puede indicar:
+
+- Ataque automatizado.
+- Uso indebido de cuenta antigua.
+- Error de configuración.
 
 ---
 
-# 🔎 Step 5 – Retrieve Most Recent Sign-in (arg_max)
+# 🔎 Paso 5 – Obtener el Evento Más Reciente (arg_max)
 
-## 🎯 Goal
-Get the latest authentication event per user.
+## 🎯 Objetivo
+Obtener el inicio de sesión más reciente por usuario.
 
-## 🧪 Query
+## 🧪 Consulta
 
 ```kql
 SigninLogs
 | summarize arg_max(TimeGenerated, *) by UserPrincipalName
 ```
 
-## 📝 Explanation
+## 📝 Explicación
 
 - `arg_max(TimeGenerated, *)`
-- Returns the full row with the most recent timestamp.
+- Devuelve la fila completa con el tiempo más reciente.
 
-## 🔐 Security Insight
+## 🔐 Análisis de Seguridad
 
-Useful for:
-- Incident response
-- Timeline reconstruction
-- Last activity verification
+Útil para:
+
+- Respuesta ante incidentes.
+- Reconstrucción de línea de tiempo.
+- Verificación de última actividad.
 
 ---
 
-# 🔎 Step 6 – Retrieve Oldest Sign-in (arg_min)
+# 🔎 Paso 6 – Obtener el Evento Más Antiguo (arg_min)
 
-## 🎯 Goal
-Identify the first recorded authentication event per user.
+## 🎯 Objetivo
+Identificar el primer evento registrado por usuario.
 
-## 🧪 Query
+## 🧪 Consulta
 
 ```kql
 SigninLogs
 | summarize arg_min(TimeGenerated, *) by UserPrincipalName
 ```
 
-## 📝 Explanation
+## 📝 Explicación
 
-- Returns earliest recorded event per user.
+- Devuelve el evento más antiguo registrado.
 
-## 🔐 Security Insight
+## 🔐 Análisis de Seguridad
 
-Useful for:
-- Historical analysis
-- Baseline behavior studies
+Permite:
+
+- Análisis histórico.
+- Establecer comportamiento base.
 
 ---
 
-# 🔎 Step 7 – Understanding Pipeline Order
+# 🔎 Paso 7 – Importancia del Orden del Pipe (`|`)
 
-## 🧪 Query 1
+## 🧪 Consulta 1
 
 ```kql
 SigninLogs
@@ -217,16 +225,16 @@ SigninLogs
 | where ResultType == 0
 ```
 
-### Meaning
+### Significado
 
-1. Get latest event per user.
-2. Filter only successful logins.
+1. Obtiene el último evento por usuario.
+2. Luego filtra si fue exitoso.
 
-👉 Shows users whose last activity was successful.
+👉 Muestra usuarios cuya última actividad fue un inicio de sesión exitoso.
 
 ---
 
-## 🧪 Query 2
+## 🧪 Consulta 2
 
 ```kql
 SigninLogs
@@ -234,30 +242,30 @@ SigninLogs
 | summarize arg_max(TimeGenerated, *) by UserPrincipalName
 ```
 
-### Meaning
+### Significado
 
-1. Filter successful logins first.
-2. Get most recent successful login.
+1. Primero filtra inicios exitosos.
+2. Luego obtiene el más reciente.
 
-👉 Shows most recent successful login for each user.
-
----
-
-## ⚠ Key Difference
-
-| Query 1 | Query 2 |
-|----------|----------|
-| Last activity was login | Last login event |
-| More restrictive | Broader |
+👉 Muestra el último inicio de sesión exitoso por usuario.
 
 ---
 
-# 🔎 Step 8 – Using make_list()
+## ⚠ Diferencia Clave
 
-## 🎯 Goal
-Generate full list of applications used by each user.
+| Consulta 1 | Consulta 2 |
+|-------------|------------|
+| Último evento fue exitoso | Último inicio exitoso |
+| Más restrictiva | Más amplia |
 
-## 🧪 Query
+---
+
+# 🔎 Paso 8 – Uso de `make_list()`
+
+## 🎯 Objetivo
+Generar una lista completa de aplicaciones utilizadas por usuario.
+
+## 🧪 Consulta
 
 ```kql
 SigninLogs
@@ -265,12 +273,12 @@ SigninLogs
 | summarize make_list(AppDisplayName) by UserPrincipalName
 ```
 
-## 📝 Explanation
+## 📝 Explicación
 
-- Returns JSON array.
-- Includes duplicate entries.
+- Devuelve un arreglo JSON.
+- Incluye valores duplicados.
 
-## Example Output
+## Ejemplo de Resultado
 
 ```json
 ["Azure Portal","Azure Portal","Teams","Outlook"]
@@ -278,12 +286,12 @@ SigninLogs
 
 ---
 
-# 🔎 Step 9 – Using make_set()
+# 🔎 Paso 9 – Uso de `make_set()`
 
-## 🎯 Goal
-Generate unique application list per user.
+## 🎯 Objetivo
+Generar lista única de aplicaciones por usuario.
 
-## 🧪 Query
+## 🧪 Consulta
 
 ```kql
 SigninLogs
@@ -291,12 +299,12 @@ SigninLogs
 | summarize make_set(AppDisplayName) by UserPrincipalName
 ```
 
-## 📝 Explanation
+## 📝 Explicación
 
-- Removes duplicates.
-- Returns distinct values only.
+- Elimina duplicados.
+- Devuelve solo valores distintos.
 
-## Example Output
+## Ejemplo de Resultado
 
 ```json
 ["Azure Portal","Teams","Outlook"]
@@ -304,22 +312,22 @@ SigninLogs
 
 ---
 
-# 🔎 Bonus – Analyze Security Alerts
+# 🔎 Paso 10 – Análisis de Alertas de Seguridad
 
-## 🧪 Query
+## 🧪 Consulta
 
 ```kql
 SecurityAlert
 | summarize count() by Severity
 ```
 
-## 🎯 Goal
+## 🎯 Objetivo
 
-Analyze alerts distribution by severity level.
+Analizar la distribución de alertas según su nivel de severidad.
 
 ---
 
-# 🧠 Key Concepts Learned
+# 🧠 Conceptos Aprendidos
 
 - `summarize`
 - `count()`
@@ -328,24 +336,24 @@ Analyze alerts distribution by severity level.
 - `arg_min()`
 - `make_list()`
 - `make_set()`
-- Importance of pipeline execution order
+- Importancia del orden del pipe
 
 ---
 
-# 🏁 Conclusion
+# 🏁 Conclusión
 
-This lab demonstrates how the `summarize` operator enables:
+El operador `summarize` permite:
 
-- Efficient aggregation  
-- Behavioral analysis  
-- Threat detection logic  
-- Security monitoring optimization  
+- Agregación eficiente de datos.
+- Análisis de comportamiento.
+- Construcción de lógica de detección.
+- Optimización del monitoreo en Microsoft Sentinel.
 
-Mastering these aggregation functions is essential for:
+Dominar estas funciones es fundamental para:
 
-- Microsoft Sentinel analysts  
-- SOC analysts  
-- SC-200 certification preparation  
-- Threat hunting  
+- Analistas SOC.
+- Analistas de Microsoft Sentinel.
+- Preparación para la certificación SC-200.
+- Actividades de Threat Hunting.
 
 ---
