@@ -42,6 +42,8 @@ Implementar **Microsoft Sentinel** sobre el Log Analytics Workspace creado en el
 
 4. Hacer clic en **Add**.
 
+![Acceso al área de registros](images/img1.jpg)
+
 ---
 
 ## ⏳ Paso 4 – Esperar la Implementación
@@ -60,6 +62,8 @@ Microsoft Sentinel debe quedar correctamente habilitado sobre el workspace:
 | Workspace               | defenderWorkspace  |
 | Estado                  | Enabled / Active   |
 | Servicio                | Microsoft Sentinel |
+
+![Acceso al área de registros](images/img2.jpg)
 
 ---
 
