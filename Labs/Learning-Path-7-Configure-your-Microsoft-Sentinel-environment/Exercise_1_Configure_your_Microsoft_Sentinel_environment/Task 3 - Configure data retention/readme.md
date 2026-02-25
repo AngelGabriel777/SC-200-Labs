@@ -70,7 +70,7 @@ El Log Analytics Workspace debe reflejar la nueva configuración:
 
 ---
 
-## 🎯 Resultado Final
+## Resultado Final
 
 El Log Analytics Workspace queda configurado con un período de retención de 180 días, permitiendo:
 
