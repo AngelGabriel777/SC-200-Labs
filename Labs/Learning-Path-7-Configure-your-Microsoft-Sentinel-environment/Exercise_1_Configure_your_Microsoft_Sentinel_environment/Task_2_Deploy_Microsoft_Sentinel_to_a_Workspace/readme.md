@@ -2,13 +2,13 @@
 
 ---
 
-## 📌 Objetivo
+## Objetivo
 
 Implementar **Microsoft Sentinel** sobre el Log Analytics Workspace creado en el Task 1, con el fin de habilitar capacidades SIEM y SOAR en el entorno.
 
 ---
 
-## 🏗 Prerrequisito
+## Prerrequisito
 
 - Log Analytics Workspace previamente creado:
   - **Nombre:** defenderWorkspace  
@@ -17,13 +17,13 @@ Implementar **Microsoft Sentinel** sobre el Log Analytics Workspace creado en el
 
 ---
 
-## 🏠 Paso 1 – Regresar al Inicio del Portal
+## Paso 1 – Regresar al Inicio del Portal
 
 1. Una vez finalizada la implementación del workspace, seleccionar **Home** desde el menú de navegación superior del portal de Azure.
 
 ---
 
-## 🔎 Paso 2 – Acceder a Microsoft Sentinel
+## Paso 2 – Acceder a Microsoft Sentinel
 
 1. En la sección **Azure services**, ubicar **Microsoft Sentinel**.  
 2. Seleccionarlo para ingresar al servicio.
@@ -32,7 +32,7 @@ Implementar **Microsoft Sentinel** sobre el Log Analytics Workspace creado en el
 
 ---
 
-## ➕ Paso 3 – Agregar Sentinel al Workspace
+## Paso 3 – Agregar Sentinel al Workspace
 
 1. Seleccionar **+ Create**.  
 2. Se mostrará la lista de Log Analytics Workspaces disponibles.  
