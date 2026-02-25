@@ -4,96 +4,95 @@
 
 ---
 
-## 📌 Objective
+## 📌 Objetivo
 
-Create a **Log Analytics Workspace** in Microsoft Azure to onboard Microsoft Sentinel.
-
----
-
-## 🏗 Environment
-
-- Platform: Microsoft Azure
-- Service: Log Analytics Workspace
-- Resource Group: Defender-RG
-- Workspace Name: defenderWorkspace
-- Region: West US (default)
+Crear un **Log Analytics Workspace** en Microsoft Azure para habilitar y configurar Microsoft Sentinel.
 
 ---
 
-## 🔐 Step 1 – Access the Virtual Machine
+## 🏗 Entorno
 
-1. Log in to the **WIN1** virtual machine.
-2. Username: `Admin`
-3. Password: `Pa55w.rd`
+- **Plataforma:** Microsoft Azure  
+- **Servicio:** Log Analytics Workspace  
+- **Resource Group:** Defender-RG  
+- **Nombre del Workspace:** defenderWorkspace  
+- **Región:** West US (predeterminada)
 
 ---
 
-## 🌐 Step 2 – Access Azure Portal
+## 🔐 Paso 1 – Acceder a la Máquina Virtual
 
-1. Open **Microsoft Edge**.
-2. Navigate to:  
+1. Iniciar sesión en la máquina virtual **WIN1**.
+2. Usuario: `Admin`
+3. Contraseña: `Pa55w.rd`
+
+---
+
+## 🌐 Paso 2 – Acceder al Portal de Azure
+
+1. Abrir **Microsoft Edge**.
+2. Navegar a la siguiente URL:  
    https://portal.azure.com
-3. Sign in using the tenant credentials provided by the lab.
+3. Iniciar sesión con las credenciales del tenant proporcionadas por el laboratorio.
 
 ---
 
-## 🔎 Step 3 – Navigate to Microsoft Sentinel
+## 🔎 Paso 3 – Navegar a Microsoft Sentinel
 
-1. In the Azure portal search bar, type:
+1. En la barra de búsqueda del portal de Azure, escribir:
 
-2. Select **Microsoft Sentinel** from the results.
-
----
-
-## ➕ Step 4 – Create a New Log Analytics Workspace
-
-1. Select **+ Create**.
-2. Click **Create a new workspace**.
+2. Seleccionar **Microsoft Sentinel** en los resultados.
 
 ---
 
-## ⚙ Step 5 – Configure Workspace Settings
+## ➕ Paso 4 – Crear un Nuevo Log Analytics Workspace
+
+1. Seleccionar **+ Create**.
+2. Hacer clic en **Create a new workspace**.
+
+---
+
+## ⚙ Paso 5 – Configurar el Workspace
 
 ### Project Details
 
-- **Subscription:** Azure subscription 1
-- **Resource Group:**  
-- Click **Create new**
-- Enter: `Defender-RG`
-- Select **OK**
+- **Subscription:** Azure subscription 1  
+- **Resource Group:**
+- Hacer clic en **Create new**
+- Escribir: `Defender-RG`
+- Seleccionar **OK**
 
 ### Instance Details
 
 - **Name:** `defenderWorkspace`
-- **Region:** West US (default)
+- **Region:** West US (región predeterminada)
 
 ---
 
-## ✅ Step 6 – Validate and Deploy
+## ✅ Paso 6 – Validar y Desplegar
 
-1. Select **Review + create**.
-2. Wait for validation to pass.
-3. Select **Create**.
-4. Wait for deployment status to show **Created**.
-
----
-
-## ✔ Expected Result
-
-A successfully deployed Log Analytics Workspace with the following configuration:
-
-| Setting           | Value               |
-|------------------|--------------------|
-| Resource Group   | Defender-RG        |
-| Workspace Name   | defenderWorkspace  |
-| Region           | West US            |
-| Status           | Created            |
+1. Seleccionar **Review + create**.
+2. Esperar a que la validación sea exitosa.
+3. Hacer clic en **Create**.
+4. Esperar hasta que el estado del despliegue muestre **Created**.
 
 ---
 
-## 🎯 Outcome
+## ✔ Resultado Esperado
 
-The Log Analytics Workspace is now ready for Microsoft Sentinel deployment.
+El Log Analytics Workspace debe quedar desplegado con la siguiente configuración:
+
+| Configuración     | Valor              |
+|------------------|-------------------|
+| Resource Group   | Defender-RG       |
+| Workspace Name   | defenderWorkspace |
+| Región           | West US           |
+| Estado           | Created           |
 
 ---
 
+## 🎯 Resultado Final
+
+El Log Analytics Workspace queda correctamente creado y listo para la implementación de Microsoft Sentinel.
+
+---
