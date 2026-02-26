@@ -23,8 +23,6 @@ Configurar el período de retención de datos del Log Analytics Workspace para c
 
 1. En el menú superior del portal de Azure (breadcrumb), seleccionar **Home**.
 
-![Habilitación de Microsoft Sentinel](images/img1.jpg)
-
 ---
 
 ##  Paso 2 – Acceder a Log Analytics Workspaces
@@ -34,7 +32,7 @@ Configurar el período de retención de datos del Log Analytics Workspace para c
 
 2. Seleccionar **Log Analytics workspaces** en la sección *Services*.
 
-![Habilitación de Microsoft Sentinel](images/img2.jpg)
+![Habilitación de Microsoft Sentinel](images/img1.jpg)
 
 ---
 
@@ -44,7 +42,7 @@ Configurar el período de retención de datos del Log Analytics Workspace para c
 
 **defenderWorkspace**
 
-![Habilitación de Microsoft Sentinel](images/img4.jpg)
+![Habilitación de Microsoft Sentinel](images/img2.jpg)
 
 ---
 
@@ -62,6 +60,9 @@ Configurar el período de retención de datos del Log Analytics Workspace para c
 
 2. Seleccionar **OK** para aplicar los cambios.
 
+
+![Habilitación de Microsoft Sentinel](images/img3.jpg)
+
 ---
 
 ##  Resultado Esperado
@@ -73,6 +74,9 @@ El Log Analytics Workspace debe reflejar la nueva configuración:
 | Workspace           | defenderWorkspace |
 | Data Retention      | 180 days |
 | Estado              | Updated |
+
+
+![Habilitación de Microsoft Sentinel](images/img4.jpg)
 
 ---
 
