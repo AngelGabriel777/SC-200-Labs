@@ -174,6 +174,7 @@ Details panel shows:
 ✅ Watchlist successfully created
 
 ![Habilitación de Microsoft Sentinel](images/img5.jpg)
+![Habilitación de Microsoft Sentinel](images/img6.jpg)
 ---
 
 # 🔍 Validation in Logs
