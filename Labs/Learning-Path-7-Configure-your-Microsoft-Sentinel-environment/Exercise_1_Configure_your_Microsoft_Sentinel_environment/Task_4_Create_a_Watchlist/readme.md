@@ -1,11 +1,11 @@
-# 🧪 SC-200 Lab — Task 4: Create a Watchlist in Microsoft Sentinel
+#  SC-200 Lab — Task 4: Create a Watchlist in Microsoft Sentinel
 
-## 🎯 Objective
+##  Objective
 Create a Watchlist in Microsoft Sentinel containing a list of high-value hosts and validate its successful ingestion.
 
 ---
 
-# 🏗️ Environment
+#  Environment
 
 | Item | Value |
 |------|------|
@@ -16,9 +16,9 @@ Create a Watchlist in Microsoft Sentinel containing a list of high-value hosts a
 
 ---
 
-# 🪜 Procedure
+#  Procedure
 
-## 1️⃣ Create the CSV File (HighValue.csv)
+## 1️ Create the CSV File (HighValue.csv)
 
 On the Windows VM:
 
@@ -45,13 +45,13 @@ On the Windows VM:
    - Type: All files
    - Location: Documents
 
-✅ File created successfully
+File created successfully
 
 ![Habilitación de Microsoft Sentinel](images/img3.jpg)
 
 ---
 
-## 2️⃣ Open Microsoft Sentinel
+## 2️ Open Microsoft Sentinel
 
 1. Go to **Azure Portal**
 2. Search **Microsoft Sentinel**
@@ -61,7 +61,7 @@ On the Windows VM:
    defenderWorkspace
    ```
 
-📌 The portal shows the message:
+ The portal shows the message:
 
 > This page has been moved to the Defender portal for the optimal SecOps experience
 
@@ -71,7 +71,7 @@ On the Windows VM:
 
 ---
 
-## 3️⃣ Navigate to Watchlists
+## 3️ Navigate to Watchlists
 
 Inside Defender portal:
 
@@ -89,7 +89,7 @@ Screen displayed:
 
 ---
 
-## 4️⃣ Start Watchlist Creation
+## 4️ Start Watchlist Creation
 
 Click:
 
@@ -107,7 +107,7 @@ Watchlist Wizard opens with steps:
 
 ---
 
-## 5️⃣ General Configuration
+## 5️ General Configuration
 
 | Field | Value |
 |------|------|
@@ -119,7 +119,7 @@ Click **Next**
 
 ---
 
-## 6️⃣ Source Configuration
+## 6️ Source Configuration
 
 | Setting | Value |
 |--------|------|
@@ -129,7 +129,7 @@ Click **Next**
 | Upload file | HighValue.csv |
 | SearchKey | Hostname |
 
-📊 File preview showed:
+File preview showed:
 
 | Hostname |
 |---------|
@@ -143,7 +143,7 @@ Click **Next**
 
 ---
 
-## 7️⃣ Review and Create
+## 7️ Review and Create
 
 1. Validate configuration
 2. Click **Create**
@@ -152,7 +152,7 @@ Click **Next**
 
 ---
 
-## 8️⃣ Watchlist Validation
+## 8️ Watchlist Validation
 
 After creation:
 
@@ -171,13 +171,13 @@ Details panel shows:
 - SearchKey: Hostname
 - Created by: user account
 
-✅ Watchlist successfully created
+ Watchlist successfully created
 
 ![Habilitación de Microsoft Sentinel](images/img5.jpg)
 ![Habilitación de Microsoft Sentinel](images/img6.jpg)
 ---
 
-# 🔍 Validation in Logs
+# Validation in Logs
 
 Open Logs and execute:
 
@@ -207,7 +207,7 @@ Host5
 
 ---
 
-# 🧠 Technical Notes
+#  Technical Notes
 
 - Watchlists are stored as name-value pairs  
 - Cached for fast query performance  
@@ -220,7 +220,7 @@ Host5
 
 ---
 
-# 🏁 Conclusion
+# Conclusion
 
 The **HighValueHosts** watchlist was successfully created in Microsoft Sentinel using the Defender portal experience.  
 The dataset was validated, ingested, and is ready for detection and hunting scenarios.
